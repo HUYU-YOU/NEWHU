@@ -1,0 +1,61 @@
+HTML
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>hu. | La Météo Humaine</title>
+    
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://api.mapbox.com https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' https://api.mapbox.com; img-src 'self' data: https://api.mapbox.com https://storage.googleapis.com; connect-src 'self' wss://ton-domaine.com https://api.mapbox.com https://events.mapbox.com;">
+
+    <script src='https://api.mapbox.com/mapbox-gl-js/v2.15.0/mapbox-gl.js'></script>
+    <link href='https://api.mapbox.com/mapbox-gl-js/v2.15.0/mapbox-gl.css' rel='stylesheet' />
+    
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="map"></div>
+
+    <nav id="global-nav">
+        <div class="nav-container">
+            <div class="nav-logo pc-only">hu<span class="sos-dot">.</span></div>
+            <a href="#" class="nav-item active" data-target="globe">
+                <span class="icon">🌍</span>
+                <span class="label">Globe</span>
+            </a>
+            <a href="#" class="nav-item" data-target="flow">
+                <span class="icon">🌊</span>
+                <span class="label">Flux</span>
+            </a>
+            <a href="#" class="nav-item" data-target="profile">
+                <span class="icon">👤</span>
+                <span class="label">Profil</span>
+            </a>
+            <a href="#" class="nav-item" data-target="messages">
+                <span class="icon">💬</span>
+                <span class="label">Messages</span>
+            </a>
+        </div>
+    </nav>
+
+    <button id="fab-upload" class="fab">
+        <span>+</span>
+    </button>
+
+    <div id="ritual-banner" class="hidden">
+        <p>Le monde observe, mais votre voix manque.</p>
+        <button onclick="openRitualWheel()">Accomplir mon rituel</button>
+    </div>
+
+    <div id="vector-overlay" class="hidden">
+        <canvas id="emotion-wheel" width="400" height="400"></canvas>
+    </div>
+
+    <div id="consent-overlay" class="consent-backdrop hidden">
+        </div>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="app.js"></script>
+    <script src="navigation.js"></script>
+</body>
+</html>
