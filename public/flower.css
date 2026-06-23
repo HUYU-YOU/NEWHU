@@ -1,0 +1,4 @@
+CSS
+#vector-overlay { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0,0,0,0.8); z-index: 2000; display: flex; justify-content: center; align-items: center; }
+.emotion-petal { cursor: pointer; transition: transform 0.3s, filter 0.3s; }
+.emotion-petal:hover { transform: scale(1.1); filter: brightness(1.2); }
