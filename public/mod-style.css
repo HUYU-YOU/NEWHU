@@ -1,0 +1,8 @@
+CSS
+body { background: #111; color: white; font-family: sans-serif; padding: 20px; }
+.mod-header { border-bottom: 1px solid #333; padding-bottom: 20px; margin-bottom: 20px; }
+.alert-card { border: 2px solid #ff4444; padding: 15px; border-radius: 8px; margin-bottom: 15px; background: #222; }
+.blurred-content { filter: blur(40px); cursor: pointer; transition: filter 0.3s; width: 100%; max-height: 200px; background: #000; }
+.mod-actions button { margin-top: 10px; padding: 10px; border: none; border-radius: 4px; cursor: pointer; }
+.btn-help { background: #ff4444; color: white; }
+.btn-care { background: #4682B4; color: white; }
