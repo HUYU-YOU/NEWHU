@@ -1,0 +1,185 @@
+HTML
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>hu. - Engagement Éthique</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            background-color: #000;
+        }
+        .consent-backdrop {
+            position: fixed; 
+            top: 0; left: 0; 
+            width: 100vw; height: 100vh;
+            background: rgba(0, 0, 0, 0.85); 
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            z-index: 9999;
+        }
+        .consent-card {
+            background: #111; 
+            border: 1px solid #333; 
+            border-radius: 20px;
+            width: 90%; 
+            max-width: 500px; 
+            padding: 30px; 
+            color: #eee;
+        }
+        .consent-card header {
+            border-bottom: 1px solid #333;
+            padding-bottom: 15px;
+            margin-bottom: 20px;
+        }
+        .consent-card h2 {
+            margin: 0;
+            font-size: 1.5rem;
+            font-weight: 500;
+        }
+        .intro { 
+            font-size: 0.95rem; 
+            color: #aaa; 
+            margin-bottom: 25px; 
+            line-height: 1.5;
+        }
+        .consent-item { 
+            display: flex; 
+            gap: 15px; 
+            margin-bottom: 20px; 
+            align-items: flex-start; 
+        }
+        .consent-item input[type="checkbox"] { 
+            margin-top: 5px; 
+            cursor: pointer; 
+            transform: scale(1.2);
+        }
+        .consent-item label { 
+            cursor: pointer; 
+        }
+        .consent-item strong { 
+            display: block; 
+            color: #fff; 
+            margin-bottom: 4px; 
+            font-size: 1.05rem;
+        }
+        .consent-item span { 
+            color: #888; 
+            font-size: 0.85rem;
+            line-height: 1.4; 
+            display: block;
+        }
+        footer { 
+            display: flex; 
+            justify-content: flex-end; 
+            gap: 15px; 
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #333;
+        }
+        button { 
+            padding: 12px 20px; 
+            border-radius: 30px; 
+            border: none; 
+            cursor: pointer; 
+            font-weight: bold; 
+            transition: all 0.3s ease;
+        }
+        #btn-decline { 
+            background: transparent; 
+            color: #888; 
+        }
+        #btn-decline:hover {
+            color: #fff;
+        }
+        #btn-accept { 
+            background: #fff; 
+            color: #000; 
+            opacity: 0.3; 
+        }
+        #btn-accept.ready { 
+            opacity: 1; 
+            box-shadow: 0 0 15px rgba(255,255,255,0.3); 
+        }
+    </style>
+</head>
+<body>
+
+    <div id="consent-overlay" class="consent-backdrop">
+        <div class="consent-card">
+            <header>
+                <h2>Engagement Éthique & Vie Privée</h2>
+            </header>
+            
+            <div class="consent-body">
+                <p class="intro">Avant de rejoindre <strong>hu.</strong>, nous devons nous accorder sur la protection de votre identité et de votre santé mentale.</p>
+                
+                <div class="consent-item">
+                    <input type="checkbox" id="check-geo">
+                    <label for="check-geo">
+                        <strong>Géolocalisation Obfusquée</strong>
+                        <span>J'accepte que ma position soit transmise avec un "flou" de sécurité. Personne ne saura jamais où je suis précisément.</span>
+                    </label>
+                </div>
+
+                <div class="consent-item">
+                    <input type="checkbox" id="check-data">
+                    <label for="check-data">
+                        <strong>Droit à l'Oubli (24h)</strong>
+                        <span>Je comprends que mes partages émotionnels (hors SOS) sont éphémères et seront définitivement supprimés après 24 heures.</span>
+                    </label>
+                </div>
+
+                <div class="consent-item">
+                    <input type="checkbox" id="check-rules">
+                    <label for="check-rules">
+                        <strong>Charte de Bienveillance</strong>
+                        <span>Je m'engage à ne pas diffuser de contenu haineux. Je sais que l'IA de hu. modère les partages pour protéger la communauté.</span>
+                    </label>
+                </div>
+            </div>
+
+            <footer>
+                <button id="btn-decline" onclick="window.location.href='/'">Refuser</button>
+                <button id="btn-accept" disabled onclick="confirmConsent()">J'accepte et je rejoins le Globe</button>
+            </footer>
+        </div>
+    </div>
+
+    <script>
+        const checkboxes = document.querySelectorAll('.consent-item input');
+        const acceptBtn = document.getElementById('btn-accept');
+
+        // Vérifie à chaque clic si toutes les cases sont cochées
+        checkboxes.forEach(box => {
+            box.addEventListener('change', () => {
+                const allChecked = Array.from(checkboxes).every(c => c.checked);
+                if (allChecked) {
+                    acceptBtn.disabled = false;
+                    acceptBtn.classList.add('ready');
+                } else {
+                    acceptBtn.disabled = true;
+                    acceptBtn.classList.remove('ready');
+                }
+            });
+        });
+
+        // Action quand on clique sur "J'accepte"
+        function confirmConsent() {
+            // Enregistrement du consentement dans le navigateur
+            const consentData = {
+                acceptedAt: new Date().toISOString(),
+                version: "1.0"
+            };
+            localStorage.setItem('hu_consent', JSON.stringify(consentData));
+            
+            // Redirection vers le globe (index.html)
+            window.location.href = 'index.html'; 
+        }
+    </script>
+</body>
+</html>
