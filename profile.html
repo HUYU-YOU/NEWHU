@@ -1,0 +1,66 @@
+HTML
+<div class="profile-container">
+    <header class="profile-header">
+        <h2 id="profile-pseudo">Nom de l'Humain</h2>
+        <div class="radiation-score">Rayonnement : <span id="score-value">120</span></div>
+    </header>
+
+    <div class="profile-tabs">
+        <button class="tab-btn active" id="tab-ephemeral" onclick="switchTab('ephemeral')">Météo Personnelle</button>
+        <button class="tab-btn" id="tab-gallery" onclick="switchTab('gallery')">Galerie de l'Empreinte</button>
+    </div>
+
+    <div id="feed-ephemeral" class="feed-grid"></div>
+    
+    <div id="feed-gallery" class="feed-grid hidden"></div>
+</div>
+
+<style>
+    .profile-tabs { display: flex; border-bottom: 1px solid #333; margin-bottom: 20px; }
+    .tab-btn { 
+        background: none; border: none; color: #888; padding: 15px; 
+        cursor: pointer; font-family: inherit; font-size: 0.9rem;
+    }
+    .tab-btn.active { color: #fff; border-bottom: 2px solid #fff; }
+    .feed-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+    .post-card .stats { display: none !important; } 
+    .hidden { display: none; }
+    .anchor-btn { background: rgba(255,255,255,0.2); color: white; border: none; padding: 5px; cursor: pointer; }
+</style>
+
+<script>
+    // 1. Logique de changement d'onglet
+    function switchTab(type) {
+        document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+        document.querySelectorAll('.feed-grid').forEach(feed => feed.classList.add('hidden'));
+
+        if(type === 'ephemeral') {
+            document.getElementById('tab-ephemeral').classList.add('active');
+            document.getElementById('feed-ephemeral').classList.remove('hidden');
+        } else {
+            document.getElementById('tab-gallery').classList.add('active');
+            document.getElementById('feed-gallery').classList.remove('hidden');
+        }
+    }
+
+    // 2. Logique d'Ancrage (C'est ici que tu mets la fonction demandée)
+    async function anchorToGallery(postId) {
+        try {
+            const response = await fetch(`/api/posts/${postId}/anchor`, {
+                method: 'PUT',
+                headers: {
+                    'Authorization': `Bearer ${localStorage.getItem('hu_token')}`,
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ is_eternal: true })
+            });
+
+            if (response.ok) {
+                alert("Cet instant fait désormais partie de votre empreinte.");
+                location.reload(); // Recharge pour voir le changement
+            }
+        } catch (err) {
+            console.error("Erreur d'ancrage :", err);
+        }
+    }
+</script>
