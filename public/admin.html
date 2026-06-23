@@ -1,0 +1,80 @@
+HTML
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Poste de Commande Prioritaire | hu.</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        body { background: #0a0a0a; color: #eee; font-family: 'Inter', sans-serif; padding: 20px; }
+        .mod-container { max-width: 1200px; margin: 0 auto; }
+        .alert-card { 
+            background: #1a1a1a; border: 1px solid #333; border-radius: 12px; 
+            margin-bottom: 20px; overflow: hidden; display: flex; flex-direction: column;
+        }
+        .alert-card.priority-high { border-color: #ff4444; box-shadow: 0 0 20px rgba(255, 68, 68, 0.2); }
+        .video-wrapper { position: relative; width: 100%; height: 300px; background: #000; }
+        .blurred { filter: blur(50px); transition: filter 0.5s ease; cursor: pointer; }
+        .blurred:hover { filter: blur(30px); }
+        .unblurred { filter: blur(0) !important; }
+        .overlay-text { 
+            position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+            text-align: center; pointer-events: none; color: #fff; font-weight: bold;
+        }
+        .mod-info { padding: 20px; }
+        .actions { display: flex; gap: 10px; padding: 20px; background: #111; }
+        button { 
+            padding: 10px 20px; border: none; border-radius: 6px; cursor: pointer; font-weight: bold;
+            transition: opacity 0.2s;
+        }
+        .btn-sos { background: #ff4444; color: white; }
+        .btn-safe { background: #44ff44; color: black; }
+        .btn-ignore { background: #333; color: white; }
+        .confidence-tag { color: #ffaa00; font-size: 0.8rem; margin-top: 5px; }
+    </style>
+</head>
+<body>
+    <div class="mod-container">
+        <h1>🚨 Alertes de Modération Prioritaires</h1>
+        <div id="alerts-list">
+            </div>
+    </div>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+        const socket = io();
+        const list = document.getElementById('alerts-list');
+
+        socket.on('mod-priority-alert', (data) => {
+            const card = document.createElement('div');
+            card.className = `alert-card ${data.score > 70 ? 'priority-high' : ''}`;
+            card.innerHTML = `
+                <div class="video-wrapper">
+                    <video id="vid-${data.id}" src="${data.video_url}" class="blurred" loop muted></video>
+                    <div class="overlay-text" id="text-${data.id}">CONTENU SENSIBLE<br>Cliquez pour lever le voile</div>
+                </div>
+                <div class="mod-info">
+                    <h3>Alerte à ${data.location}</h3>
+                    <p>${data.aiContext}</p>
+                    <div class="confidence-tag">Certitude IA : ${data.score}%</div>
+                </div>
+                <div class="actions">
+                    <button class="btn-sos" onclick="resolveSOS('${data.id}')">Déclencher Aide</button>
+                    <button class="btn-safe" onclick="markSafe('${data.id}')">Valider (Sain)</button>
+                    <button class="btn-ignore" onclick="removeAlert('${data.id}')">Ignorer</button>
+                </div>
+            `;
+            list.prepend(card);
+
+            const v = card.querySelector('video');
+            v.onclick = () => {
+                v.classList.toggle('unblurred');
+                document.getElementById(`text-${data.id}`).style.display = 'none';
+                v.play();
+            };
+        });
+
+        function removeAlert(id) { /* Logique de suppression UI */ }
+    </script>
+</body>
+</html>
