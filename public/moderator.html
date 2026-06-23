@@ -1,0 +1,25 @@
+HTML
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Poste de Commande | hu.</title>
+    <link rel="stylesheet" href="mod-style.css">
+</head>
+<body>
+    <header class="mod-header">
+        <h2>Poste de Commande : hu.</h2>
+        <div class="mod-stats">Alertes actives : <span id="alert-count">0</span></div>
+    </header>
+    <div class="mod-grid" id="alerts-container">
+        </div>
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+        const socket = io();
+        socket.on('mod-alert', (data) => {
+            // Logique d'affichage dynamique de l'alerte floutée
+        });
+        function unblur(el) { el.classList.remove('blurred-content'); }
+    </script>
+</body>
+</html>
