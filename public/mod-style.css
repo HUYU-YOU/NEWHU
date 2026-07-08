@@ -1,3 +1,4 @@
+// public/mod-style.css
 CSS
 body { background: #111; color: white; font-family: sans-serif; padding: 20px; }
 .mod-header { border-bottom: 1px solid #333; padding-bottom: 20px; margin-bottom: 20px; }
@@ -6,3 +7,24 @@ body { background: #111; color: white; font-family: sans-serif; padding: 20px; }
 .mod-actions button { margin-top: 10px; padding: 10px; border: none; border-radius: 4px; cursor: pointer; }
 .btn-help { background: #ff4444; color: white; }
 .btn-care { background: #4682B4; color: white; }
+/* Style des ondes de résonance temps réel */
+.emotion-pulse-ring {
+    width: 20px;
+    height: 20px;
+    border: 2px solid #fff;
+    border-radius: 50%;
+    animation: ripple 3s ease-out forwards;
+    pointer-events: none; /* Ne bloque pas les clics sur la carte */
+    transition: opacity 1s ease;
+}
+
+@keyframes ripple {
+    0% {
+        transform: scale(0.5);
+        opacity: 1;
+    }
+    100% {
+        transform: scale(4);
+        opacity: 0;
+    }
+}
