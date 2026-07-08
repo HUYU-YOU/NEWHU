@@ -17,6 +17,34 @@ body { background: #111; color: white; font-family: sans-serif; padding: 20px; }
     pointer-events: none; /* Ne bloque pas les clics sur la carte */
     transition: opacity 1s ease;
 }
+.custom-controls {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 1000;
+    display: flex;
+    gap: 10px;
+    background: rgba(10, 10, 10, 0.7);
+    backdrop-filter: blur(20px);
+    padding: 5px;
+    border-radius: 30px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+.btn-view {
+    background: transparent;
+    color: #888;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 12px;
+    transition: all 0.3s ease;
+}
+.btn-view.active, .btn-view:hover {
+    background: #fff;
+    color: #000;
+    font-weight: bold;
+}
 
 @keyframes ripple {
     0% {
